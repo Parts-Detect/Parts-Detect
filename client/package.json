@@ -1,0 +1,53 @@
+{
+  "name": "parts-detect",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "babel-core": "7.0.0-bridge.0",
+    "babel-plugin-transform-assets": "^1.0.2",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-scripts": "3.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build && npm run lib",
+    "lib": "rm -rf lib/ && NODE_ENV=production babel src/ -d lib/ && npm run lib:esm",
+    "lib:esm": "find lib/ -type f -name *.js -exec sed -i'' -e 's|@babel/runtime/helpers/esm|@babel/runtime/helpers|g' {} +",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "babel": {
+    "plugins": [
+      "@babel/plugin-transform-modules-commonjs",
+      [
+        "transform-assets",
+        {
+          "extensions": [
+            "css",
+            "svg"
+          ],
+          "name": "static/media/[name].[hash:8].[ext]"
+        }
+      ]
+    ],
+    "presets": [
+      "react-app"
+    ]
+  }
+}
